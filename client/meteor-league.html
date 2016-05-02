@@ -1,0 +1,64 @@
+<head>
+  <title>Meteor League</title>
+  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, width=device-width" />
+</head>
+
+<body class="gradient-pattern">
+  <div class="ui middle-aligned center-aligned grid {{#unless hasChampions}}max-height{{/unless}}">
+    <div class="ui column">
+      <div id="search-container" class="ui raised segment">
+        {{> search}}
+      </div>
+      <div class="ui hidden negative message">
+        <i class="close icon"></i>
+        <div class="header">oops</div>
+        <p id="error-message-text"></p>
+      </div>
+
+      {{#if hasChampions}}
+      <div class="ui raised segment">
+        <div class="ui items">
+          {{#each lowestChampions}}
+            {{> championMastery}}
+          {{/each}}
+        </div>
+      </div>
+      {{/if}}
+    </div>
+  </div>
+</body>
+
+<template name="search">
+  <div class="search-header">
+    <h1 class="ui orange header">Find <div class="ui inline dropdown">
+      <input type="hidden" name="masteryOrder">
+      <div class="text">lowest</div>
+      <i class="dropdown icon"></i>
+      <div class="menu">
+        <div class="item" data-value="1">lowest</div>
+        <div class="item" data-value="-1">highest</div>
+      </div>
+    </div>masteries</h1>
+  </div>
+  <div class="ui fluid big icon input {{#if loading}}loading{{/if}}">
+    <input class="summoner-name" type="text" placeholder="Summoner Name">
+    <i class="search link icon"></i>
+  </div>
+</template>
+
+<template name="championMastery">
+   <div class="item">
+     <div class="ui tiny image">
+       <img src="http://ddragon.leagueoflegends.com/cdn/6.6.1/img/champion/{{champInfo.image.full}}">
+     </div>
+     <div class="content">
+       <div class="header">{{champInfo.name}}</div>
+       <div class="meta">
+         Role - {{champInfo.tags.[0]}}
+       </div>
+       <div class="description">
+         Mastery Level - {{championLevel}} | Mastery Points - {{championPoints}}
+       </div>
+    </div>
+  </div>
+</template>
